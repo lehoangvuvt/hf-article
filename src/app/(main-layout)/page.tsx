@@ -25,7 +25,7 @@ const HomePage = () => {
   return (
     <div className="w-full flex flex-row flex-wrap items-start gap-[50px]">
       <div className="w-[65%] flex flex-wrap flex-col pb-[50px]">
-        <div className="sticky top-[0px] mt-[35px] z-[100] w-[100%] h-[60px]">
+        <div className="sticky top-[0px] mt-[35px] mb-[20px] z-[100] w-[100%] h-[60px]">
           <ScrollerItems />
         </div>
         <PostsList />

@@ -31,6 +31,9 @@ const TextEditorView: React.FC<Props> = ({ contents, topics = [] }) => {
     return (
       <div
         id="title-wrapper"
+        style={{
+          textWrap: "balance",
+        }}
         className="w-full relative mb-[20px] flex text-center"
       >
         <div

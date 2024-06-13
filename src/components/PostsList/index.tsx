@@ -9,9 +9,11 @@ import usePostsByTopic from "@/react-query/hooks/usePostsByTopic";
 const PostsList = ({
   q = "*",
   searchMode = false,
+  style,
 }: {
   q?: string;
   searchMode?: boolean;
+  style?: React.CSSProperties;
 }) => {
   const searchParams = useSearchParams();
   const { posts, isLoading } = usePosts(
@@ -24,7 +26,7 @@ const PostsList = ({
     usePostsByTopic(searchParams.get("topic"));
 
   return (
-    <div className="w-full flex flex-col flex-wrap gap-[15px]">
+    <div style={style} className="w-full flex flex-col flex-wrap gap-[15px]">
       {isLoading ||
         (isLoadingPostsByTopic &&
           Array(10)

@@ -27,14 +27,13 @@ const SearchInput = () => {
   };
 
   return (
-    <form
-      onSubmit={submit}
-      className="w-full flex items-center bg-[rgba(0,0,0,0.03)] px-[16px] py-[8px] rounded-3xl"
-    >
+    <form onSubmit={submit} className="w-full flex items-center">
       <input
         onChange={(e) => setSearchTxt(e.target.value)}
         value={searchTxt}
-        className="w-full border-none outline-none bg-transparent text-[0.85rem]"
+        className="w-full border-none outline-none text-[0.85rem]
+        transition-colors bg-[rgba(0,0,0,0.03)] px-[16px] py-[8px] rounded-3xl focus:bg-[rgba(0,0,0,0.05)]
+        "
         placeholder="Search"
       />
     </form>

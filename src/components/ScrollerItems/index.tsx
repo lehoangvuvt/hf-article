@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import useTopics from "@/react-query/hooks/useTopics";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Topic } from "@/types/apiResponse";
 
 const ScrollerItems = () => {
   const searchParams = useSearchParams();
@@ -14,12 +15,48 @@ const ScrollerItems = () => {
   const router = useRouter();
   const [currTopic, setCurrTopic] = useState("all");
   const ref = useRef<HTMLDivElement>(null);
+  const [isInitial, setInitial] = useState(true);
 
   useEffect(() => {
     if (searchParams.has("topic")) {
       setCurrTopic(searchParams.get("topic") as string);
     }
   }, [searchParams]);
+
+  useEffect(() => {
+    if (topics && topics.length > 0) {
+      const topicsWithAll: Topic[] = [
+        {
+          created_at: "",
+          id: -1,
+          slug: "all",
+          topic_name: "All",
+          total_posts: -1,
+        },
+        ...topics,
+      ];
+      const index = topicsWithAll.findIndex((ele) => ele.slug === currTopic);
+      if (index === -1) return;
+      if (ref && ref.current) {
+        const behavior: ScrollBehavior = isInitial ? "instant" : "smooth";
+        ref.current.scrollTo({
+          left: index !== 0 ? widthPerItem * (index - 2) : 0,
+          behavior,
+        });
+        if (index !== 0) {
+          setFirst(false);
+        } else {
+          setFirst(true);
+        }
+        if (index === topicsWithAll.length - 1) {
+          setLast(true);
+        } else {
+          setLast(false);
+        }
+        setInitial(false);
+      }
+    }
+  }, [currTopic, topics, isInitial]);
 
   const handleNext = () => {
     setFirst(false);

@@ -34,7 +34,7 @@ const usePosts = (
   );
 
   return {
-    posts: data,
+    posts: data ?? null,
     isError,
     isLoading,
   };
