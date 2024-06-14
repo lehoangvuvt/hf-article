@@ -1,17 +1,34 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
-import { FontStyle, TextEditorContent, Type } from "./types";
+import { FontStyle, TextEditorContent } from "./types";
 import ParagraphView from "./paragraphView";
-import { Topic } from "@/types/apiResponse";
+import { PostDetails, PostLike, Topic } from "@/types/apiResponse";
 import { useRouter } from "next/navigation";
+import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+import ThumbUpAlt from "@mui/icons-material/ThumbUpAlt";
+import PostsService from "@/services/posts.service";
+import { useQueryClient } from "react-query";
+import { QUERY_KEYS } from "@/react-query/consts";
+import { useSelector } from "react-redux";
+import { State } from "@/redux/store";
+import { toast } from "react-toastify";
 
 type Props = {
   contents: TextEditorContent;
   topics?: Topic[] | null;
+  postDetails?: PostDetails;
+  postLikes?: PostLike[] | null;
 };
 
-const TextEditorView: React.FC<Props> = ({ contents, topics = [] }) => {
+const TextEditorView: React.FC<Props> = ({
+  contents,
+  topics = [],
+  postDetails = null,
+  postLikes = null,
+}) => {
+  const queryClient = useQueryClient();
+  const userState = useSelector((state: State) => state.user);
   const router = useRouter();
   const [clonedContents, setClonedContents] =
     useState<TextEditorContent | null>(null);
@@ -146,6 +163,75 @@ const TextEditorView: React.FC<Props> = ({ contents, topics = [] }) => {
       <div className="w-full flex-col gap-[20px]">
         <div className="w-full flex flex-col mb-[30px]">
           {clonedContents && getTitleNode(clonedContents.title.content)}
+          {postDetails && (
+            <div
+              className="w-full flex flex-row items-center 
+                        gap-[5px] mb-[30px] mt-[30px] py-[15px]
+                        border-y-solid border-y-[rgba(0,0,0,0.1)] border-y-[1px]"
+            >
+              {postLikes &&
+              postLikes.find(
+                (ele) => ele.user_id === userState.userInfo?.id
+              ) ? (
+                <div
+                  onClick={async () => {
+                    const response = await PostsService.UnlikePost(
+                      postDetails.id
+                    );
+                    if (response.status === "success") {
+                      queryClient.invalidateQueries([
+                        QUERY_KEYS.POST_LIKES_BY_POST_ID,
+                      ]);
+                    }
+                  }}
+                  style={{
+                    transform: "scaleX(-1)",
+                    cursor: "pointer",
+                  }}
+                >
+                  <ThumbUpAlt />
+                </div>
+              ) : (
+                <div
+                  onClick={async () => {
+                    if (!userState.userInfo) {
+                      toast(
+                        <div>
+                          You need to{" "}
+                          <span
+                            onClick={() => router.push("/login")}
+                            className="cursor-pointer text-[#0099FF] font-semibold hover:underline"
+                          >
+                            login
+                          </span>{" "}
+                          to be able to like this post
+                        </div>,
+                        {
+                          position: "top-center",
+                        }
+                      );
+                      return;
+                    }
+                    const response = await PostsService.LikePost(
+                      postDetails.id
+                    );
+                    if (response.status === "success") {
+                      queryClient.invalidateQueries([
+                        QUERY_KEYS.POST_LIKES_BY_POST_ID,
+                      ]);
+                    }
+                  }}
+                  style={{
+                    transform: "scaleX(-1)",
+                    cursor: "pointer",
+                  }}
+                >
+                  <ThumbUpOffAltIcon />
+                </div>
+              )}
+              {postLikes?.length ?? 0} likes
+            </div>
+          )}
           {clonedContents &&
             clonedContents.paragraphs.map((pa, i) => (
               <ParagraphView

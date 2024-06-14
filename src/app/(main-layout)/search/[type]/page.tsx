@@ -47,7 +47,7 @@ const SearchPage = ({
 
   return (
     <div className="w-[100%] flex flex-col">
-      <div className="w-full py-[40px] font-semibold text-[2.5rem] text-[rgba(0,0,0,0.55)]">
+      <div className="w-full py-[40px] font-semibold text-[2.5rem] text-[rgba(0,0,0,0.45)]">
         Results for{" "}
         <span className="text-[#121212]">{`“${searchParams.q}”`}</span>
       </div>

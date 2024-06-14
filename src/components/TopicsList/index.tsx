@@ -11,18 +11,24 @@ const TopicsList = ({
   topics: Topic[] | null;
   isLoading: boolean;
 }) => {
+  const getRandomWidth = () => {
+    return Math.floor(Math.random() * (100 - 80 + 1) + 80);
+  };
+
   return (
     <div className="w-[100%] flex flex-row justify-start items-start flex-wrap gap-[10px]">
       {isLoading
-        ? Array(5)
+        ? Array(8)
             .fill("")
             .map((_, i) => (
               <MySkeleton
                 key={i}
                 shape={SHAPE_ENUMS.CUSTOM}
-                customRatio={2.5 / 1}
+                childrenStyle={{
+                  height: "35px",
+                }}
                 borderRadius="40px"
-                width="80px"
+                width={getRandomWidth() + "px"}
               />
             ))
         : topics &&

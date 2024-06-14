@@ -1,6 +1,7 @@
 import {
   CreatePostSuccessResponse,
   GetPostDetailsSuccessResponse,
+  GetPostLikesByPostIdSuccessResponse,
   GetPostsSuccessResponse,
 } from "@/types/apiResponse";
 import baseAxios from "./axiosClient";
@@ -64,9 +65,69 @@ const PostsService = {
   > {
     try {
       const url = `${process.env.NEXT_PUBLIC_BASE_API_URL}${baseServiceURL}/post/${slug}`;
-      const response = await fetch(url);
+      const response = await fetch(url, { cache: "no-store" });
       const json = await response.json();
       return { status: "success", data: json };
+    } catch (err: any) {
+      return { status: "fail", errorMsg: err.response.data.error };
+    }
+  },
+  async GetPostLikesByPostId(postId: number): Promise<
+    | {
+        status: "success";
+        data: GetPostLikesByPostIdSuccessResponse;
+      }
+    | {
+        status: "fail";
+        errorMsg: string;
+      }
+  > {
+    try {
+      const url = `${baseServiceURL}/likes/${postId}`;
+      const response = (await baseAxios.get(
+        url
+      )) as GetPostLikesByPostIdSuccessResponse;
+      return { status: "success", data: response };
+    } catch (err: any) {
+      return { status: "fail", errorMsg: err.response.data.error };
+    }
+  },
+  async LikePost(postId: number): Promise<
+    | {
+        status: "success";
+        data: { message: string };
+      }
+    | {
+        status: "fail";
+        errorMsg: string;
+      }
+  > {
+    try {
+      const url = `${baseServiceURL}/likes/${postId}`;
+      const response = (await baseAxios.put(url, null, {
+        withCredentials: true,
+      })) as { message: string };
+      return { status: "success", data: response };
+    } catch (err: any) {
+      return { status: "fail", errorMsg: err.response.data.error };
+    }
+  },
+  async UnlikePost(postId: number): Promise<
+    | {
+        status: "success";
+        data: { message: string };
+      }
+    | {
+        status: "fail";
+        errorMsg: string;
+      }
+  > {
+    try {
+      const url = `${baseServiceURL}/likes/${postId}`;
+      const response = (await baseAxios.delete(url, {
+        withCredentials: true,
+      })) as { message: string };
+      return { status: "success", data: response };
     } catch (err: any) {
       return { status: "fail", errorMsg: err.response.data.error };
     }
@@ -74,3 +135,7 @@ const PostsService = {
 };
 
 export default PostsService;
+
+//
+// router.HandlerFunc(http.MethodPut, "/posts/likes/:id", app.AuthGuard(app.likePostHandler))
+// router.HandlerFunc(http.MethodDelete, "/posts/likes/:id", app.AuthGuard(app.unlikePostHandler))

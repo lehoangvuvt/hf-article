@@ -87,6 +87,13 @@ export type Topic = {
   created_at: string;
 };
 
+export type PostLike = {
+  id: number;
+  post_id: number;
+  user_id: number;
+  created_at: string;
+};
+
 export type LoginSuccessResponse = UserInfo;
 
 export type GetAllGenresSuccessResponse = {
@@ -155,4 +162,8 @@ export type GetPostsSuccessResponse = {
 
 export type GetTopicsSuccessResponse = {
   topics: Topic[];
+};
+
+export type GetPostLikesByPostIdSuccessResponse = {
+  post_likes: PostLike[] | null;
 };
