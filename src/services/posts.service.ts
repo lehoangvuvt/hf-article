@@ -65,7 +65,7 @@ const PostsService = {
   > {
     try {
       const url = `${process.env.NEXT_PUBLIC_BASE_API_URL}${baseServiceURL}/post/${slug}`;
-      const response = await fetch(url, { cache: "no-store" });
+      const response = await fetch(url);
       const json = await response.json();
       return { status: "success", data: json };
     } catch (err: any) {
