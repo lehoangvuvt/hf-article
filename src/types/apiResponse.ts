@@ -151,6 +151,16 @@ export type UploadFileSuccessResponse = {
   height: number;
 };
 
+export type Comment = {
+  id: number;
+  post_id: number;
+  reply_to_comment_id: number;
+  content: string;
+  user_details: UserInfo;
+  user_id: number;
+  created_at: string;
+};
+
 export type GetPostDetailsSuccessResponse = {
   post: PostDetails;
   relative_posts: Post[];
@@ -166,4 +176,8 @@ export type GetTopicsSuccessResponse = {
 
 export type GetPostLikesByPostIdSuccessResponse = {
   post_likes: PostLike[] | null;
+};
+
+export type GetCommentsByPostIdSuccessResponse = {
+  comments: Comment[] | null;
 };

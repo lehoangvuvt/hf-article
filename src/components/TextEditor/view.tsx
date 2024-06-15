@@ -13,12 +13,14 @@ import { QUERY_KEYS } from "@/react-query/consts";
 import { useSelector } from "react-redux";
 import { State } from "@/redux/store";
 import { toast } from "react-toastify";
+import MySkeleton, { SHAPE_ENUMS } from "../Skeleton";
 
 type Props = {
   contents: TextEditorContent;
   topics?: Topic[] | null;
   postDetails?: PostDetails;
-  postLikes?: PostLike[] | null;
+  postLikes: PostLike[] | null;
+  isLoadingPostLikes: boolean;
 };
 
 const TextEditorView: React.FC<Props> = ({
@@ -26,6 +28,7 @@ const TextEditorView: React.FC<Props> = ({
   topics = [],
   postDetails = null,
   postLikes = null,
+  isLoadingPostLikes,
 }) => {
   const queryClient = useQueryClient();
   const userState = useSelector((state: State) => state.user);
@@ -56,7 +59,7 @@ const TextEditorView: React.FC<Props> = ({
         <div
           id={`title`}
           onInput={(e) => handleOnTextChange(e, -1)}
-          className="w-full text-[3rem] font-bold text-[#121212] block break-words outline-none px-[10px] py-[5px] bg-[white]"
+          className="w-full text-[3rem] max-[760px]:text-[2rem] font-bold text-[#121212] block break-words outline-none px-[10px] py-[5px] bg-[white]"
         >
           {title.length > 0 && title}
         </div>
@@ -163,10 +166,23 @@ const TextEditorView: React.FC<Props> = ({
       <div className="w-full flex-col gap-[20px]">
         <div className="w-full flex flex-col mb-[30px]">
           {clonedContents && getTitleNode(clonedContents.title.content)}
-          {postDetails && (
+          {isLoadingPostLikes && (
+            <MySkeleton
+              width="100%"
+              shape={SHAPE_ENUMS.CUSTOM}
+              customRatio={13}
+              style={{
+                marginBottom: "20px",
+              }}
+              childrenStyle={{
+                borderRadius: "2px",
+              }}
+            />
+          )}
+          {postDetails && !isLoadingPostLikes && (
             <div
               className="w-full flex flex-row items-center 
-                        gap-[5px] mb-[30px] mt-[30px] py-[15px]
+                        gap-[5px] mb-[30px] mt-[30px] max-[760px]:mt-[0px] py-[15px]
                         border-y-solid border-y-[rgba(0,0,0,0.1)] border-y-[1px]"
             >
               {postLikes &&

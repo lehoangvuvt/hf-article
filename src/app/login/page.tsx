@@ -6,6 +6,7 @@ import { routes } from "@/config/routes";
 import useCustomRouter from "@/hooks/useCustomRouter";
 import { setUserFavouriteItems, setUserInfo } from "@/redux/slices/userSlice";
 import UsersService from "@/services/users.service";
+import { useRouter } from "next/navigation";
 import React, { FormEvent, useState } from "react";
 import { useDispatch } from "react-redux";
 import { ClipLoader } from "react-spinners";
@@ -13,6 +14,7 @@ import { twMerge } from "tailwind-merge";
 
 const LoginPage = () => {
   const { pushRoute } = useCustomRouter();
+  const router = useRouter();
   const [isLoading, setLoading] = useState(false);
   const [username, setUsername] = useState<string>("lehoangvuvt");
   const [password, setPassword] = useState<string>("12345");
@@ -30,7 +32,7 @@ const LoginPage = () => {
       if (getFavItemsRes.status === "success") {
         dispatch(setUserFavouriteItems(getFavItemsRes.data));
       }
-      pushRoute(routes.HOME);
+      router.back();
     } else {
       dispatch(setUserInfo(null));
       setErrorMsg(response.errorMsg);

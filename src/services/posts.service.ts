@@ -1,5 +1,6 @@
 import {
   CreatePostSuccessResponse,
+  GetCommentsByPostIdSuccessResponse,
   GetPostDetailsSuccessResponse,
   GetPostLikesByPostIdSuccessResponse,
   GetPostsSuccessResponse,
@@ -127,6 +128,57 @@ const PostsService = {
       const response = (await baseAxios.delete(url, {
         withCredentials: true,
       })) as { message: string };
+      return { status: "success", data: response };
+    } catch (err: any) {
+      return { status: "fail", errorMsg: err.response.data.error };
+    }
+  },
+  async CommentToPost(data: {
+    postId: number;
+    content: string;
+    replyToCommentId: number;
+  }): Promise<
+    | {
+        status: "success";
+        data: { message: string };
+      }
+    | {
+        status: "fail";
+        errorMsg: string;
+      }
+  > {
+    try {
+      const url = `${baseServiceURL}/comments/${data.postId}`;
+      const response = (await baseAxios.post(
+        url,
+        {
+          content: data.content,
+          reply_to_comment_id: data.replyToCommentId,
+        },
+        {
+          withCredentials: true,
+        }
+      )) as { message: string };
+      return { status: "success", data: response };
+    } catch (err: any) {
+      return { status: "fail", errorMsg: err.response.data.error };
+    }
+  },
+  async GetCommentsByPostId(postId: number): Promise<
+    | {
+        status: "success";
+        data: GetCommentsByPostIdSuccessResponse;
+      }
+    | {
+        status: "fail";
+        errorMsg: string;
+      }
+  > {
+    try {
+      const url = `${baseServiceURL}/comments/${postId}`;
+      const response = (await baseAxios.get(
+        url
+      )) as GetCommentsByPostIdSuccessResponse;
       return { status: "success", data: response };
     } catch (err: any) {
       return { status: "fail", errorMsg: err.response.data.error };

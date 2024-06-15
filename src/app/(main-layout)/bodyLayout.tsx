@@ -13,7 +13,7 @@ export default function BodyLayout({
   return (
     <div
       className={twMerge(
-        "w-[75%] h-auto",
+        "w-[75%] max-[768px]:w-[95%] h-auto",
         "mt-[10px]",
         "flex flex-col flex-wrap items-center mb-[100px]"
       )}

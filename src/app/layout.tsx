@@ -4,6 +4,7 @@ import "./globals.css";
 import ReduxProvider from "@/redux/provider";
 import ReactQueryProvider from "@/react-query/provider";
 import AuthWrapper from "@/middlewares/authWrapper";
+import Head from "next/head";
 
 const merri = Merriweather({
   subsets: ["vietnamese", "latin"],
@@ -13,6 +14,7 @@ const merri = Merriweather({
 export const metadata: Metadata = {
   title: "Podcast Today",
   description: "Podcast Today",
+  viewport: 'width=device-width, initial-scale=1.0"',
 };
 
 export default function RootLayout({

@@ -29,9 +29,9 @@ const SearchPage = ({
     switch (params.type) {
       case "posts":
         return (
-          <div className="w-full flex flex-row">
+          <div className="w-[75%] max-[768px]:w-full flex flex-row">
             <PostsListNoFetch
-              style={{ width: "75%" }}
+              style={{ width: "100%" }}
               isLoading={isLoadingPosts}
               posts={posts}
             />

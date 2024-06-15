@@ -1,5 +1,6 @@
 "use client";
 
+import CommentSection from "@/components/CommentSection";
 import PostItem from "@/components/PostItem";
 import { TextEditorContent } from "@/components/TextEditor/types";
 import TextEditorView from "@/components/TextEditor/view";
@@ -8,17 +9,19 @@ import { GetPostDetailsSuccessResponse } from "@/types/apiResponse";
 
 const PostDetailsView = ({ data }: { data: GetPostDetailsSuccessResponse }) => {
   const contents = JSON.parse(data.post.content) as TextEditorContent;
-  const { postLikes } = usePostLikesByPostId(data.post.id);
+  const { postLikes, isLoading } = usePostLikesByPostId(data.post.id);
 
   return (
-    <div className="w-[70%] flex flex-col relative gap-[40px]">
+    <div className="w-[70%] max-[760px]:w-full flex flex-col relative gap-[40px]">
       <div className="w-full flex flex-col relative">
         <TextEditorView
           contents={contents}
           topics={data.post.topics}
           postDetails={data.post}
           postLikes={postLikes}
+          isLoadingPostLikes={isLoading}
         />
+        <CommentSection data={data} style={{ marginTop: "50px" }} />
       </div>
 
       {data.relative_posts && data.relative_posts.length > 0 && (

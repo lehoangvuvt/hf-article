@@ -9,18 +9,18 @@ const RelativeTopicsHeader = ({ currSlug }: { currSlug: string }) => {
   const { topics, isLoading } = useRelativeTopics(currSlug);
 
   return (
-    <div className="w-full flex flex-row gap-[15px] pt-[10px] pb-[10px]">
+    <div className="w-full flex flex-row flex-wrap gap-[15px] pt-[10px] pb-[10px]">
       {isLoading &&
-        Array(10)
+        Array(8)
           .fill("")
           .map((_, i) => (
             <MySkeleton
               key={i}
               borderRadius="20px"
               shape={SHAPE_ENUMS.CUSTOM}
-              customRatio={3 / 1}
-              style={{
-                flex: 1,
+              style={{ width: "100px" }}
+              childrenStyle={{
+                height: "35px",
               }}
             />
           ))}

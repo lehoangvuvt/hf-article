@@ -25,7 +25,7 @@ const TopicsList = ({
                 key={i}
                 shape={SHAPE_ENUMS.CUSTOM}
                 childrenStyle={{
-                  height: "35px",
+                  height: "30px",
                 }}
                 borderRadius="40px"
                 width={getRandomWidth() + "px"}
