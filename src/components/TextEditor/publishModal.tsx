@@ -107,7 +107,11 @@ const PublishModal: React.FC<Props> = ({ packedData, isOpen }) => {
             }}
             className="w-full flex-1 justify-center overflow-y-auto"
           >
-            <TextEditorView contents={JSON.parse(packedData.content)} />
+            <TextEditorView
+              contents={JSON.parse(packedData.content)}
+              postLikes={null}
+              isLoadingPostLikes={false}
+            />
           </div>
         </div>
 
