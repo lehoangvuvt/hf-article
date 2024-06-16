@@ -29,7 +29,7 @@ const RelativeTopicsHeader = ({ currSlug }: { currSlug: string }) => {
         topics.length > 0 &&
         topics.map((topic) => (
           <div
-            onClick={() => router.push("/topic/" + topic.slug)}
+            onClick={() => router.push("/topic/" + topic.slug + "?page=1")}
             style={{
               border:
                 currSlug === topic.slug

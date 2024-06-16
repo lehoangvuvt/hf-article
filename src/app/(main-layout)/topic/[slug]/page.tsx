@@ -1,11 +1,20 @@
 import PostItem from "@/components/PostItem";
 import TopicsService from "@/services/topics.service";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import RelativeTopicsHeader from "./relativeTopicsHeader";
 
-const TopicPosts = async ({ params }: { params: { slug: string } }) => {
-  const response = await TopicsService.GetPostsByTopic(params.slug);
+const TopicPosts = async ({
+  params,
+  searchParams,
+}: {
+  params: { slug: string };
+  searchParams: { page: number };
+}) => {
+  const response = await TopicsService.GetPostsByTopic(
+    params.slug,
+    searchParams.page - 1 ?? 0,
+    6
+  );
   if (response.status === "fail") return notFound();
   return (
     <div className="w-full flex flex-col">
@@ -14,7 +23,9 @@ const TopicPosts = async ({ params }: { params: { slug: string } }) => {
         {response.data?.posts &&
           response.data.posts.length > 0 &&
           response.data.posts.map((post) => (
-            <PostItem key={post.id} mode="VERTICAL" post={post} width="48%" />
+            <div key={post.id} className="w-[48%] max-[768px]:w-[100%]">
+              <PostItem mode="VERTICAL" post={post} width="100%" />
+            </div>
           ))}
       </div>
     </div>
