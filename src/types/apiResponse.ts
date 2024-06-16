@@ -167,7 +167,9 @@ export type GetPostDetailsSuccessResponse = {
 };
 
 export type GetPostsSuccessResponse = {
-  posts: Post[];
+  posts: Post[] | null;
+  has_next: boolean;
+  has_prev: boolean;
 };
 
 export type GetTopicsSuccessResponse = {

@@ -48,8 +48,12 @@ const CommentSection = ({
         {!isLoading &&
           comments &&
           comments.length > 0 &&
-          comments.map((comment) => (
-            <CommentItem key={comment.id} comment={comment} />
+          comments.map((comment, i) => (
+            <CommentItem
+              isLast={i === comments.length - 1}
+              key={comment.id}
+              comment={comment}
+            />
           ))}
       </div>
     </div>

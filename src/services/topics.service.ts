@@ -45,7 +45,10 @@ const TopicsService = {
       return { status: "fail", errorMsg: err.response.data.error };
     }
   },
-  async GetPostsByTopic(topicSlug: string): Promise<
+  async GetPostsByTopic(
+    topicSlug: string,
+    page: number = 0
+  ): Promise<
     | {
         status: "success";
         data: GetPostsSuccessResponse;
@@ -57,7 +60,7 @@ const TopicsService = {
   > {
     try {
       const response = (await baseAxios.get(
-        `${baseServiceURL}/posts/${topicSlug}`
+        `${baseServiceURL}/posts?slug=${topicSlug}&take=5&page=${page}`
       )) as GetPostsSuccessResponse;
       return { status: "success", data: response };
     } catch (err: any) {

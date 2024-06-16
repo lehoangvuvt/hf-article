@@ -11,7 +11,8 @@ const TopicPosts = async ({ params }: { params: { slug: string } }) => {
     <div className="w-full flex flex-col">
       <RelativeTopicsHeader currSlug={params.slug} />
       <div className="w-full flex flex-row flex-wrap justify-between">
-        {response.data.posts?.length > 0 &&
+        {response.data?.posts &&
+          response.data.posts.length > 0 &&
           response.data.posts.map((post) => (
             <PostItem key={post.id} mode="VERTICAL" post={post} width="48%" />
           ))}

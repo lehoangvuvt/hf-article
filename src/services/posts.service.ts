@@ -10,7 +10,11 @@ import baseAxios from "./axiosClient";
 const baseServiceURL = "/posts";
 
 const PostsService = {
-  async GetPosts(q: string = "*"): Promise<
+  async GetPosts(
+    q: string = "*",
+    start: number,
+    end: number
+  ): Promise<
     | {
         status: "success";
         data: GetPostsSuccessResponse;
@@ -21,7 +25,16 @@ const PostsService = {
       }
   > {
     try {
-      const url = `${baseServiceURL}/search/${q}`;
+      let url = `${baseServiceURL}/search?q=${q}&take=5`;
+
+      if (start !== -1) {
+        url += `&start=${start}`;
+      }
+
+      if (end !== -1) {
+        url += `&end=${end}`;
+      }
+
       const response = (await baseAxios.get(url)) as GetPostsSuccessResponse;
       return { status: "success", data: response };
     } catch (err: any) {
@@ -187,7 +200,3 @@ const PostsService = {
 };
 
 export default PostsService;
-
-//
-// router.HandlerFunc(http.MethodPut, "/posts/likes/:id", app.AuthGuard(app.likePostHandler))
-// router.HandlerFunc(http.MethodDelete, "/posts/likes/:id", app.AuthGuard(app.unlikePostHandler))

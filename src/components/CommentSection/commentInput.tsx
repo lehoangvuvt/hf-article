@@ -64,7 +64,7 @@ const CommentInput = ({
         value={commentInput}
         onChange={(e) => setCommentInput(e.target.value)}
         type="text"
-        className="flex-1 outline-none text-[0.925rem]"
+        className="flex-1 outline-none text-[0.925rem] placeholder:text-[rgba(0,0,0,0.35)]"
         placeholder="Share your thoughts about this post"
       />
       <button

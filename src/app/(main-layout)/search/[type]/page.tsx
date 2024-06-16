@@ -15,7 +15,7 @@ const SearchPage = ({
   params: { type: string };
 }) => {
   const router = useRouter();
-  const { posts, isLoading: isLoadingPosts } = usePosts(
+  const { data: getPostsData, isLoading: isLoadingPosts } = usePosts(
     null,
     searchParams.q ?? "*",
     params.type && params.type === "posts" ? true : false
@@ -33,7 +33,7 @@ const SearchPage = ({
             <PostsListNoFetch
               style={{ width: "100%" }}
               isLoading={isLoadingPosts}
-              posts={posts}
+              posts={getPostsData ? getPostsData.posts : null}
             />
             {/* <div className="w-full flex-1">
               <TopicsList isLoading={} />
