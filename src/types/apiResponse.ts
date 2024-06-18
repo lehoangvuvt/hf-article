@@ -170,6 +170,8 @@ export type GetPostsSuccessResponse = {
   posts: Post[] | null;
   has_next: boolean;
   has_prev: boolean;
+  total?: number;
+  total_pages?: number;
 };
 
 export type GetTopicsSuccessResponse = {

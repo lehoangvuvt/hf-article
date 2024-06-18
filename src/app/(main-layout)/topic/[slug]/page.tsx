@@ -2,6 +2,7 @@ import PostItem from "@/components/PostItem";
 import TopicsService from "@/services/topics.service";
 import { notFound } from "next/navigation";
 import RelativeTopicsHeader from "./relativeTopicsHeader";
+import TopicDetailsView from "./view";
 
 const TopicPosts = async ({
   params,
@@ -20,13 +21,7 @@ const TopicPosts = async ({
     <div className="w-full flex flex-col">
       <RelativeTopicsHeader currSlug={params.slug} />
       <div className="w-full flex flex-row flex-wrap justify-between">
-        {response.data?.posts &&
-          response.data.posts.length > 0 &&
-          response.data.posts.map((post) => (
-            <div key={post.id} className="w-[48%] max-[768px]:w-[100%]">
-              <PostItem mode="VERTICAL" post={post} width="100%" />
-            </div>
-          ))}
+        <TopicDetailsView data={response.data} />
       </div>
     </div>
   );
