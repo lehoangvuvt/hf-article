@@ -43,10 +43,24 @@ const PostItem: React.FC<Props> = ({
             {moment(post.created_at).format("MMM DD, YYYY")}
           </div>
         </div>
-        <div
-          className="flex-1 flex items-center justify-end  max-[768px]:hidden"
-          dangerouslySetInnerHTML={{ __html: post.thumbnail_url }}
-        />
+        {post.thumbnail_url && (
+          <div className="w-[30%] aspect-video flex items-start justify-center relative">
+            <Image
+              src={
+                post.editor_type === 1
+                  ? post.thumbnail_url
+                      .split("src=")[1]
+                      .split("alt=")[0]
+                      .replaceAll(`"`, "")
+                  : post.thumbnail_url
+              }
+              alt="thumbnail"
+              fill
+              objectFit="contain"
+              objectPosition="right"
+            />
+          </div>
+        )}
       </div>
     );
   } else {
@@ -63,10 +77,14 @@ const PostItem: React.FC<Props> = ({
         {post.thumbnail_url && (
           <div className="w-[100%] aspect-video flex items-start justify-center relative">
             <Image
-              src={post.thumbnail_url
-                .split("src=")[1]
-                .split("alt=")[0]
-                .replaceAll(`"`, "")}
+              src={
+                post.editor_type === 1
+                  ? post.thumbnail_url
+                      .split("src=")[1]
+                      .split("alt=")[0]
+                      .replaceAll(`"`, "")
+                  : post.thumbnail_url
+              }
               alt="thumbnail"
               fill
               objectFit="contain"

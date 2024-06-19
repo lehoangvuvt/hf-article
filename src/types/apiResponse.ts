@@ -66,6 +66,7 @@ export type Post = {
   title: string;
   short_content: string;
   thumbnail_url: string;
+  editor_type: number;
   created_at: string;
 };
 
@@ -76,6 +77,7 @@ export type PostDetails = {
   title: string;
   content: string;
   topics: Topic[] | null;
+  editor_type: number;
   created_at: string;
 };
 

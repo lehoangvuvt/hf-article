@@ -1,6 +1,7 @@
 "use client";
 
 import CommentSection from "@/components/CommentSection";
+import NewEditor from "@/components/NewTextEditor";
 import PostItem from "@/components/PostItem";
 import { TextEditorContent } from "@/components/TextEditor/types";
 import TextEditorView from "@/components/TextEditor/view";
@@ -14,13 +15,21 @@ const PostDetailsView = ({ data }: { data: GetPostDetailsSuccessResponse }) => {
   return (
     <div className="w-[70%] max-[760px]:w-full flex flex-col relative gap-[40px]">
       <div className="w-full flex flex-col relative">
-        <TextEditorView
-          contents={contents}
-          topics={data.post.topics}
-          postDetails={data.post}
-          postLikes={postLikes}
-          isLoadingPostLikes={isLoading}
-        />
+        {data.post.editor_type === 1 && (
+          <TextEditorView
+            contents={contents}
+            topics={data.post.topics}
+            postDetails={data.post}
+            postLikes={postLikes}
+            isLoadingPostLikes={isLoading}
+          />
+        )}
+        {data.post.editor_type === 2 && (
+          <NewEditor
+            mode="readonly"
+            initValue={JSON.parse(data.post.content)}
+          />
+        )}
         <CommentSection data={data} style={{ marginTop: "50px" }} />
       </div>
 

@@ -78,7 +78,7 @@ const AddToFavButton: React.FC<Props> = ({ type, itemId }) => {
   };
 
   return (
-    <AuthConditionalRenderWrapper required>
+    <AuthConditionalRenderWrapper renderIf="AUTH">
       <button
         className={twMerge(
           "rounded-full",

@@ -5,16 +5,16 @@ import { useSelector } from "react-redux";
 
 type Props = {
   children: React.ReactNode;
-  required: boolean;
+  renderIf: "AUTH" | "NOT_AUTH";
 };
 
 const AuthConditionalRenderWrapper: React.FC<Props> = ({
   children,
-  required,
+  renderIf,
 }) => {
   const userSlice = useSelector((state: State) => state.user);
 
-  return required
+  return renderIf === "AUTH"
     ? userSlice.userInfo
       ? children
       : null

@@ -7,6 +7,7 @@ import TextEditorView from "./view";
 import useSearchTopics from "@/react-query/hooks/useSearchTopics";
 import { Popover } from "@mui/material";
 import PostsService from "@/services/posts.service";
+import NewEditor from "../NewTextEditor";
 
 type Props = {
   packedData: PackedData | null;
@@ -107,10 +108,9 @@ const PublishModal: React.FC<Props> = ({ packedData, isOpen }) => {
             }}
             className="w-full flex-1 justify-center overflow-y-auto"
           >
-            <TextEditorView
-              contents={JSON.parse(packedData.content)}
-              postLikes={null}
-              isLoadingPostLikes={false}
+            <NewEditor
+              initValue={JSON.parse(packedData.content)}
+              mode="readonly"
             />
           </div>
         </div>

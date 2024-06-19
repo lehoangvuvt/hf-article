@@ -18,7 +18,7 @@ const UserInfoButton = () => {
 
   return (
     <div>
-      <AuthConditionalRenderWrapper required>
+      <AuthConditionalRenderWrapper renderIf="AUTH">
         <Popover
           containerStyle={{
             zIndex: "101",
@@ -65,7 +65,7 @@ const UserInfoButton = () => {
           />
         </Popover>
       </AuthConditionalRenderWrapper>
-      <AuthConditionalRenderWrapper required={false}>
+      <AuthConditionalRenderWrapper renderIf="NOT_AUTH">
         <div
           onClick={() => pushRouteWithHistory("/login")}
           className={twMerge(

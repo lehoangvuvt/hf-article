@@ -43,7 +43,7 @@ export default function Layout({
           </div>
         </Suspense>
         <div className="flex-1 flex items-center justify-end">
-          <AuthConditionalRenderWrapper required>
+          <AuthConditionalRenderWrapper renderIf="AUTH">
             <Link
               href="/new-post"
               className="flex items-center text-[rgba(0,0,0,0.6)] gap-[8px] text-[0.85rem] font-medium
@@ -54,7 +54,7 @@ export default function Layout({
               Write
             </Link>
           </AuthConditionalRenderWrapper>
-          <AuthConditionalRenderWrapper required={false}>
+          <AuthConditionalRenderWrapper renderIf="NOT_AUTH">
             <Link
               href="/login"
               className="flex items-center text-[white] gap-[8px] text-[0.85rem] font-medium
