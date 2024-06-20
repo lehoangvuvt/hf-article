@@ -18,6 +18,9 @@ export async function generateMetadata({
   return {
     title: response.data.post.title,
     description: response.data.post.title,
+    openGraph: {
+      images: [response.data.post.thumbnail_url ?? ""],
+    },
   };
 }
 

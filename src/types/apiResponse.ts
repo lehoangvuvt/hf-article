@@ -77,6 +77,7 @@ export type PostDetails = {
   title: string;
   content: string;
   topics: Topic[] | null;
+  thumbnail_url: string | null;
   editor_type: number;
   created_at: string;
 };
