@@ -29,6 +29,7 @@ const usePosts = (
     searchMode === false
       ? typeof topicSlug === "string" && topicSlug === "all"
       : true;
+
   const { data, isError, isLoading } = useQuery(
     [QUERY_KEYS.POSTS, q, start, end],
     getPosts,

@@ -22,7 +22,7 @@ const SearchInput = () => {
     if (searchTxt.trim().length === 0) {
       router.push("/?topic=all");
     } else {
-      router.push(`/search/posts?q=${searchTxt}`);
+      router.replace(`/search/posts?q=${searchTxt}`);
     }
   };
 
