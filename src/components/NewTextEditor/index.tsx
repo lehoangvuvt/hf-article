@@ -13,8 +13,6 @@ import Embed from "@yoopta/embed";
 import Image from "@yoopta/image";
 import Link from "@yoopta/link";
 import Callout from "@yoopta/callout";
-import Video from "@yoopta/video";
-import File from "@yoopta/file";
 import Accordion from "@yoopta/accordion";
 import { NumberedList, BulletedList, TodoList } from "@yoopta/lists";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -89,7 +87,19 @@ function NewEditor({
   const plugins: any = [
     Paragraph,
     Accordion,
-    HeadingOne,
+    HeadingOne.extend({
+      options: {
+        align: "center",
+        HTMLAttributes: {
+          style: {
+            textAlign: "center",
+            textWrap: "balance",
+            paddingBottom: "20px",
+            lineHeight: "50px",
+          },
+        },
+      },
+    }),
     HeadingTwo,
     HeadingThree,
     Blockquote,
@@ -104,7 +114,6 @@ function NewEditor({
       options: {
         async onUpload(file) {
           const base64 = (await toBase64(file)) as string;
-
           const response = await UploadService.UploadFile({
             base64,
             file_type: "image",
@@ -282,7 +291,7 @@ function NewEditor({
             }}
             onClick={() => setOpenMenu(!isOpenMenu)}
             className={`fixed top-[200px] max-[768px]:right-[10px] max-[768px]:top-[80px] right-[18%] border-solid border-[1px] border-[rgba(0,0,0,0.2)]
-                          rounded-[40px] h-[45px] w-[45px] bg-[white] z-[100] flex items-center justify-center cursor-pointer shadow-md`}
+                          rounded-[40px] h-[42px] w-[42px] bg-[white] z-[100] flex items-center justify-center cursor-pointer shadow-md`}
           >
             <div>
               <MenuIcon
@@ -297,8 +306,8 @@ function NewEditor({
                   transform: isOpenMenu ? "scale(1)" : "scale(0)",
                   transition: "all 0.1s ease",
                 }}
-                className={`w-[350px] max-[768px]:right-[10px] max-[768px]:top-[130px] flex flex-col gap-[10px] 
-                          bg-[white] px-[20px] py-[20px] fixed top-[250px] right-[18%] 
+                className={`w-[400px] max-[768px]:right-[10px] max-[768px]:top-[130px] flex flex-col gap-[20px] 
+                          bg-[white] px-[20px] py-[20px] fixed top-[250px] right-[18%] max-h-[300px] overflow-y-auto
                           rounded-md border-solid border-[1px] border-[rgba(0,0,0,0.1)] shadow-md`}
               >
                 {headingTitles.map((title) => (
@@ -323,8 +332,8 @@ function NewEditor({
               transition: "all 0.1s ease",
             }}
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-            className="fixed bottom-[50px] cursor-pointer w-[48px] h-[48px] shadow-md
-              rounded-full flex items-center justify-center bg-[#0099FF] max-[768px]:right-[10px] right-[18%] z-[100]"
+            className="fixed bottom-[50px] cursor-pointer w-[42px] h-[42px] shadow-md
+              rounded-full flex items-center justify-center bg-[#E4405F] max-[768px]:right-[10px] right-[18%] z-[100]"
           >
             <KeyboardArrowUpIcon htmlColor="#ffffff" fontSize="large" />
           </div>

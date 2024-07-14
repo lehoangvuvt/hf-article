@@ -44,7 +44,7 @@ const PostItem: React.FC<Props> = ({
           </div>
         </div>
         {post.thumbnail_url && (
-          <div className="w-[30%] aspect-video flex items-start justify-center relative">
+          <div className="w-[40%] max-[768px]:w-[100%] aspect-video flex items-start justify-center relative">
             <Image
               src={
                 post.editor_type === 1
