@@ -17,6 +17,7 @@ import Video from "@yoopta/video";
 import File from "@yoopta/file";
 import Accordion from "@yoopta/accordion";
 import { NumberedList, BulletedList, TodoList } from "@yoopta/lists";
+import MenuIcon from "@mui/icons-material/Menu";
 import {
   Bold,
   Italic,
@@ -61,6 +62,10 @@ function NewEditor({
   const editor = useMemo(() => createYooptaEditor(), []);
   const selectionRef = useRef(null);
   const [thumbnailURL, setThumbnailURL] = useState<string | null>(null);
+  const [isOpenMenu, setOpenMenu] = useState(false);
+  const [headingTitles, setHeadingTitles] = useState<
+    { id: string; text: string }[]
+  >([]);
 
   const plugins: any = [
     Paragraph,
@@ -136,6 +141,22 @@ function NewEditor({
     };
   }, [editor]);
 
+  useEffect(() => {
+    const headingTitles: { id: string; text: string }[] = [];
+    if (mode === "readonly") {
+      Object.keys(initValue).forEach((key: any) => {
+        const item = initValue[key];
+        if (item.type.includes("Heading")) {
+          headingTitles.push({
+            id: item.value[0].id,
+            text: item.value[0].children[0].text,
+          });
+        }
+      });
+      setHeadingTitles(headingTitles.slice(1));
+    }
+  }, [mode, initValue]);
+
   const save = async () => {
     const editorContent = editor.getEditorValue();
     let title = "";
@@ -164,8 +185,6 @@ function NewEditor({
       }
     });
 
-    console.log(sortedByOrder);
-
     // clone.title.content = document.getElementById("title")?.innerText as string;
     // const title = clone.title.content;
     const data: PackedData = {
@@ -176,6 +195,14 @@ function NewEditor({
     };
     setPackedData(data);
     setOpenPbModal(true);
+  };
+
+  const scrollToContent = (eleId: string) => {
+    const ele: any = document.getElementById(eleId);
+    if (ele) {
+      const parent: any = ele.offsetParent.offsetParent;
+      window.scrollTo({ top: parent.offsetTop, behavior: "smooth" });
+    }
   };
 
   return (
@@ -229,6 +256,47 @@ function NewEditor({
             readOnly
             autoFocus
           />
+          <div
+            tabIndex={1}
+            onBlur={(e) => {
+              setOpenMenu(false);
+            }}
+            onClick={() => setOpenMenu(!isOpenMenu)}
+            className={`fixed top-[200px] max-[768px]:right-[10px] max-[768px]:top-[80px] right-[18%] border-solid border-[2px] border-[rgba(0,0,0,0.2)]
+                          rounded-[40px] h-[40px] w-[40px] bg-[white] z-[100] flex items-center justify-center cursor-pointer`}
+          >
+            <div>
+              <MenuIcon
+                fontSize="inherit"
+                style={{
+                  fontSize: "1.2rem",
+                }}
+              />
+              <div
+                style={{
+                  pointerEvents: isOpenMenu ? "auto" : "none",
+                  opacity: isOpenMenu ? 1 : 0,
+                  transition: "all 0.1s ease",
+                }}
+                className={`w-[350px] max-[768px]:right-[10px] max-[768px]:top-[125px] flex flex-col gap-[10px] 
+                          bg-[white] px-[20px] py-[20px] fixed top-[250px] right-[18%] 
+                          rounded-md border-solid border-[1px] border-[rgba(0,0,0,0.1)] shadow-md`}
+              >
+                {headingTitles.map((title) => (
+                  <div
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      scrollToContent(title.id);
+                    }}
+                    className="hover:underline"
+                    key={title.id}
+                  >
+                    {title.text}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
