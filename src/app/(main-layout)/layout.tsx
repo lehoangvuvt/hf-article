@@ -27,7 +27,7 @@ export default function Layout({
       <div className="w-[100%] top-0 z-[200] flex flex-row items-center justify-start bg-[white] gap-[20px] px-[5%] py-[15px] shadow-sm">
         <Link
           href="/?topic=all"
-          className="w-[18%] aspect-[5.5/1] relative cursor-pointer"
+          className="w-[21%] aspect-[5.5/1] relative cursor-pointer"
         >
           <Image
             src={logo.src}
