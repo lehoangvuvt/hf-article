@@ -62,13 +62,13 @@ function Thumbnail() {
   const context = useContext(PostItemContext);
   if (context.post?.thumbnail_url) {
     return (
-      <div className="w-[100%] max-[768px]:w-[100%] aspect-video flex items-start justify-start relative">
+      <div className="w-[100%] max-[768px]:w-[100%] aspect-video flex items-center justify-center relative">
         <Image
           src={context.post.thumbnail_url}
           alt="thumbnail"
           fill
-          objectFit="contain"
-          objectPosition="left"
+          objectFit="cover"
+          objectPosition="center"
         />
       </div>
     );

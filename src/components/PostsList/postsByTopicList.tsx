@@ -33,7 +33,7 @@ const PostsByTopicList = () => {
               width: "100%",
             }}
           >
-            <div className="w-[65%]">
+            <div className="w-[65%] max-[768px]:w-full">
               <PostItem.Username />
               <PostItem.Title />
               <PostItem.ShortContent />

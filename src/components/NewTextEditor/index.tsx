@@ -340,10 +340,10 @@ function NewEditor({
                     }}
                     style={{
                       background:
-                        title.id === neartTitleId
-                          ? "rgba(0,0,0,0.05)"
-                          : "transparent",
+                        title.id === neartTitleId ? "#F3E5F5" : "transparent",
+                      fontWeight: title.id === neartTitleId ? 600 : 400,
                       padding: "10px 8px",
+                      transition: "all 0.2s ease",
                     }}
                     className="hover:underline text-[0.9rem] rounded-sm"
                     key={title.id}
@@ -362,7 +362,7 @@ function NewEditor({
             }}
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             className="fixed bottom-[50px] cursor-pointer w-[42px] h-[42px] shadow-md
-              rounded-full flex items-center justify-center bg-[#42A5F5] max-[768px]:right-[10px] right-[18%] z-[100]"
+              rounded-full flex items-center justify-center bg-[#CE93D8] max-[768px]:right-[10px] right-[18%] z-[100]"
           >
             <KeyboardArrowUpIcon htmlColor="#ffffff" fontSize="large" />
           </div>
