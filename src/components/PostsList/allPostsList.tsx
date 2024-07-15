@@ -32,11 +32,15 @@ export const AllPostsList = () => {
               width: "100%",
             }}
           >
-            <PostItem.Username />
-            <PostItem.Title />
-            <PostItem.ShortContent />
-            <PostItem.CreatedAt />
-            <PostItem.Thumbnail />
+            <div className="w-[65%] max-[768px]:w-full">
+              <PostItem.Username />
+              <PostItem.Title />
+              <PostItem.ShortContent />
+              <PostItem.CreatedAt />
+            </div>
+            <div className="flex-1 flex items-center justify-end">
+              <PostItem.Thumbnail />
+            </div>
           </PostItem.Root>
         ))}
 

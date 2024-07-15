@@ -1,4 +1,3 @@
-import PostItem from "@/components/PostItem";
 import TopicsService from "@/services/topics.service";
 import { notFound } from "next/navigation";
 import RelativeTopicsHeader from "./relativeTopicsHeader";

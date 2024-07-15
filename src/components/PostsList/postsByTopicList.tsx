@@ -1,7 +1,7 @@
 "use client";
 
 import MySkeleton, { SHAPE_ENUMS } from "../Skeleton";
-import PostItem from "../PostItem";
+import { PostItem } from "../PostItem";
 import { useSearchParams } from "next/navigation";
 import usePostsByTopic from "@/react-query/hooks/usePostsByTopic";
 import { useEffect, useState } from "react";
@@ -25,7 +25,24 @@ const PostsByTopicList = () => {
       {posts &&
         posts.length > 0 &&
         posts.map((post) => (
-          <PostItem width="100%" key={post.id} post={post} />
+          <PostItem.Root
+            key={post.id}
+            mode="HORIZONTAL"
+            context={{
+              post,
+              width: "100%",
+            }}
+          >
+            <div className="w-[65%]">
+              <PostItem.Username />
+              <PostItem.Title />
+              <PostItem.ShortContent />
+              <PostItem.CreatedAt />
+            </div>
+            <div className="flex-1 flex items-center justify-end">
+              <PostItem.Thumbnail />
+            </div>
+          </PostItem.Root>
         ))}
 
       {isLoading &&

@@ -25,7 +25,7 @@ const PostItemContext = createContext<Context>({
 function Username() {
   const context = useContext(PostItemContext);
   return (
-    <div className="w-full font-medium text-[0.9rem] text-[rgba(0,0,0,0.7)] pr-[100px] max-[768px]:pr-[0px] mb-[20px]">
+    <div className="w-full font-medium text-[0.9rem] text-[rgba(0,0,0,0.7)] pr-[100px] max-[768px]:pr-[0px] mb-[10px] mt-[10px]">
       {context.post?.username}
     </div>
   );
@@ -62,13 +62,13 @@ function Thumbnail() {
   const context = useContext(PostItemContext);
   if (context.post?.thumbnail_url) {
     return (
-      <div className="w-[100%] max-[768px]:w-[100%] aspect-video flex items-start justify-center relative">
+      <div className="w-[100%] max-[768px]:w-[100%] aspect-video flex items-start justify-start relative">
         <Image
           src={context.post.thumbnail_url}
           alt="thumbnail"
           fill
           objectFit="contain"
-          objectPosition="right"
+          objectPosition="left"
         />
       </div>
     );
@@ -92,9 +92,7 @@ const Root: React.FC<Props> = ({ context, mode = "HORIZONTAL", children }) => {
           }}
           className="flex flex-row max-[768px]:flex-col py-[15px] cursor-pointer"
         >
-          <div className="w-[75%] max-[768px]:w-full  flex flex-col ">
-            {children}
-          </div>
+          {children}
         </div>
       </PostItemContext.Provider>
     );

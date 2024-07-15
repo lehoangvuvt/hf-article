@@ -1,6 +1,6 @@
 "use client";
 
-import PostItem from "@/components/PostItem";
+import { PostItem } from "@/components/PostItem";
 import MySkeleton, { SHAPE_ENUMS } from "@/components/Skeleton";
 import usePosts from "@/react-query/hooks/usePosts";
 import { Post } from "@/types/apiResponse";

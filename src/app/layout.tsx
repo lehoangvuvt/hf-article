@@ -1,14 +1,13 @@
 import type { Metadata } from "next";
-import { Merriweather } from "next/font/google";
+import { Noto_Serif } from "next/font/google";
 import "./globals.css";
 import ReduxProvider from "@/redux/provider";
 import ReactQueryProvider from "@/react-query/provider";
 import AuthWrapper from "@/middlewares/authWrapper";
-import Head from "next/head";
 
-const merri = Merriweather({
+const merri = Noto_Serif({
   subsets: ["vietnamese", "latin"],
-  weight: ["300", "400", "700", "900"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
 });
 
 export const metadata: Metadata = {

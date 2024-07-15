@@ -30,6 +30,10 @@ const TopicDetailsView = ({ data }: { data: GetPostsSuccessResponse }) => {
                 }}
               >
                 <PostItem.Thumbnail />
+                <PostItem.Username />
+                <PostItem.Title />
+                <PostItem.ShortContent />
+                <PostItem.CreatedAt />
               </PostItem.Root>
             </div>
           ))}

@@ -12,12 +12,7 @@ const PostDetailsView = ({ data }: { data: GetPostDetailsSuccessResponse }) => {
   return (
     <div className="w-[70%] max-[760px]:w-full flex flex-col relative gap-[40px]">
       <div className="w-full flex flex-col relative">
-        {data.post.editor_type === 2 && (
-          <NewEditor
-            mode="readonly"
-            initValue={JSON.parse(data.post.content)}
-          />
-        )}
+        <NewEditor mode="readonly" initValue={JSON.parse(data.post.content)} />
         <div className="w-full flex flex-row gap-[15px]">
           {data.post.topics &&
             data.post.topics.length > 0 &&
@@ -46,10 +41,14 @@ const PostDetailsView = ({ data }: { data: GetPostDetailsSuccessResponse }) => {
                 mode="VERTICAL"
                 context={{
                   post,
-                  width: "48%%",
+                  width: "48%",
                 }}
               >
                 <PostItem.Thumbnail />
+                <div className="mt-[15px] w-full">
+                  <PostItem.Title />
+                </div>
+                <PostItem.Username />
               </PostItem.Root>
             ))}
           </div>

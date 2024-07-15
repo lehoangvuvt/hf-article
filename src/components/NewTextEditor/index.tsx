@@ -61,6 +61,7 @@ function NewEditor({
   const [isOpenPbModal, setOpenPbModal] = useState(false);
   const editor = useMemo(() => createYooptaEditor(), []);
   const selectionRef = useRef(null);
+  const [neartTitleId, setNearestTitleId] = useState<string>("");
   const [thumbnailURL, setThumbnailURL] = useState<string | null>(null);
   const [isOpenMenu, setOpenMenu] = useState(false);
   const [headingTitles, setHeadingTitles] = useState<
@@ -78,11 +79,30 @@ function NewEditor({
           setShowScrollTopBtn(false);
         }
       }
+      let nearestDistance = 0;
+      let nearestTitleId: string = "";
+      headingTitles.forEach((title, i) => {
+        const ele: any = document.getElementById(title.id);
+        if (ele) {
+          const eleOFfsetTop: any = ele.offsetParent.offsetParent.offsetTop;
+          const distance = Math.abs(eleOFfsetTop - window.scrollY);
+          if (i === 0) {
+            nearestDistance = distance;
+            nearestTitleId = title.id;
+          } else {
+            if (distance < nearestDistance) {
+              nearestDistance = distance;
+              nearestTitleId = title.id;
+            }
+          }
+        }
+      });
+      setNearestTitleId(nearestTitleId);
     };
     if (mode === "readonly") {
       window.addEventListener("scroll", handleOnScroll);
     }
-  }, [mode, isShowScrollTopBtn]);
+  }, [mode, isShowScrollTopBtn, headingTitles]);
 
   const plugins: any = [
     Paragraph,
@@ -130,7 +150,9 @@ function NewEditor({
               },
             };
           }
-          setThumbnailURL(response.data.url);
+          if (thumbnailURL != null) {
+            setThumbnailURL(response.data.url);
+          }
           return {
             src: response.data.url,
             alt: file.name,
@@ -306,8 +328,8 @@ function NewEditor({
                   transform: isOpenMenu ? "scale(1)" : "scale(0)",
                   transition: "all 0.1s ease",
                 }}
-                className={`w-[400px] max-[768px]:right-[10px] max-[768px]:top-[130px] flex flex-col gap-[20px] 
-                          bg-[white] px-[20px] py-[20px] fixed top-[250px] right-[18%] max-h-[300px] overflow-y-auto
+                className={`w-[400px] max-[768px]:right-[10px] max-[768px]:top-[130px] flex flex-col gap-[5px]
+                          bg-[white] px-[10px] py-[10px] fixed top-[250px] right-[18%] max-h-[300px] overflow-y-auto
                           rounded-md border-solid border-[1px] border-[rgba(0,0,0,0.1)] shadow-md`}
               >
                 {headingTitles.map((title) => (
@@ -316,7 +338,14 @@ function NewEditor({
                       e.stopPropagation();
                       scrollToContent(title.id);
                     }}
-                    className="hover:underline text-[0.9rem]"
+                    style={{
+                      background:
+                        title.id === neartTitleId
+                          ? "rgba(0,0,0,0.05)"
+                          : "transparent",
+                      padding: "10px 8px",
+                    }}
+                    className="hover:underline text-[0.9rem] rounded-sm"
                     key={title.id}
                   >
                     • {title.text}
@@ -333,7 +362,7 @@ function NewEditor({
             }}
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             className="fixed bottom-[50px] cursor-pointer w-[42px] h-[42px] shadow-md
-              rounded-full flex items-center justify-center bg-[#E4405F] max-[768px]:right-[10px] right-[18%] z-[100]"
+              rounded-full flex items-center justify-center bg-[#42A5F5] max-[768px]:right-[10px] right-[18%] z-[100]"
           >
             <KeyboardArrowUpIcon htmlColor="#ffffff" fontSize="large" />
           </div>
