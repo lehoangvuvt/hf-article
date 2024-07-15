@@ -49,7 +49,19 @@ const SearchPostsPage = () => {
         {posts &&
           posts.length > 0 &&
           posts.map((post) => (
-            <PostItem width="100%" key={post.id} post={post} />
+            <PostItem.Root
+              context={{ post: post, width: "100%" }}
+              key={post.id}
+            >
+              <div className="w-[60%]">
+                <PostItem.Username />
+                <PostItem.Title />
+                <PostItem.ShortContent />
+              </div>
+              <div className="flex-1">
+                <PostItem.Thumbnail />
+              </div>
+            </PostItem.Root>
           ))}
 
         {isLoadingPosts &&
