@@ -1,6 +1,6 @@
 "use client";
 
-import PostItem from "@/components/PostItem";
+import { PostItem } from "@/components/PostItem";
 import { GetPostsSuccessResponse } from "@/types/apiResponse";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
@@ -22,7 +22,15 @@ const TopicDetailsView = ({ data }: { data: GetPostsSuccessResponse }) => {
           data.posts.length > 0 &&
           data.posts.map((post) => (
             <div key={post.id} className="w-[48%] max-[768px]:w-[100%]">
-              <PostItem mode="VERTICAL" post={post} width="100%" />
+              <PostItem.Root
+                mode="VERTICAL"
+                context={{
+                  post,
+                  width: "100%",
+                }}
+              >
+                <PostItem.Thumbnail />
+              </PostItem.Root>
             </div>
           ))}
       </div>

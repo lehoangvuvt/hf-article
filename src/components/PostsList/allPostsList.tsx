@@ -1,7 +1,7 @@
 "use client";
 
 import MySkeleton, { SHAPE_ENUMS } from "../Skeleton";
-import PostItem from "../PostItem";
+import { PostItem } from "../PostItem";
 import usePosts from "@/react-query/hooks/usePosts";
 import { useEffect, useState } from "react";
 import { Post } from "@/types/apiResponse";
@@ -24,7 +24,20 @@ export const AllPostsList = () => {
       {posts &&
         posts.length > 0 &&
         posts.map((post) => (
-          <PostItem width="100%" key={post.id} post={post} />
+          <PostItem.Root
+            key={post.id}
+            mode="HORIZONTAL"
+            context={{
+              post,
+              width: "100%",
+            }}
+          >
+            <PostItem.Username />
+            <PostItem.Title />
+            <PostItem.ShortContent />
+            <PostItem.CreatedAt />
+            <PostItem.Thumbnail />
+          </PostItem.Root>
         ))}
 
       {isLoading &&

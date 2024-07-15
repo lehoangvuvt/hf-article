@@ -2,34 +2,35 @@
 
 import CommentSection from "@/components/CommentSection";
 import NewEditor from "@/components/NewTextEditor";
-import PostItem from "@/components/PostItem";
-import { TextEditorContent } from "@/components/TextEditor/types";
-import TextEditorView from "@/components/TextEditor/view";
-import usePostLikesByPostId from "@/react-query/hooks/usePostLikesByPostId";
+import { PostItem } from "@/components/PostItem";
 import { GetPostDetailsSuccessResponse } from "@/types/apiResponse";
+import { useRouter } from "next/navigation";
 
 const PostDetailsView = ({ data }: { data: GetPostDetailsSuccessResponse }) => {
-  const contents = JSON.parse(data.post.content) as TextEditorContent;
-  const { postLikes, isLoading } = usePostLikesByPostId(data.post.id);
+  const router = useRouter();
 
   return (
     <div className="w-[70%] max-[760px]:w-full flex flex-col relative gap-[40px]">
       <div className="w-full flex flex-col relative">
-        {data.post.editor_type === 1 && (
-          <TextEditorView
-            contents={contents}
-            topics={data.post.topics}
-            postDetails={data.post}
-            postLikes={postLikes}
-            isLoadingPostLikes={isLoading}
-          />
-        )}
         {data.post.editor_type === 2 && (
           <NewEditor
             mode="readonly"
             initValue={JSON.parse(data.post.content)}
           />
         )}
+        <div className="w-full flex flex-row gap-[15px]">
+          {data.post.topics &&
+            data.post.topics.length > 0 &&
+            data.post.topics.map((topic) => (
+              <div
+                onClick={() => router.push("/topic/" + topic.slug)}
+                key={topic.id}
+                className="bg-[rgba(0,0,0,0.05)] cursor-pointer text-[0.85rem] py-[10px] px-[20px] rounded-3xl font-semibold"
+              >
+                {topic.topic_name}
+              </div>
+            ))}
+        </div>
         <CommentSection data={data} style={{ marginTop: "50px" }} />
       </div>
 
@@ -40,7 +41,16 @@ const PostDetailsView = ({ data }: { data: GetPostDetailsSuccessResponse }) => {
           </div>
           <div className="w-full flex flex-row flex-wrap relative justify-between">
             {data.relative_posts.map((post) => (
-              <PostItem width="48%" mode="VERTICAL" key={post.id} post={post} />
+              <PostItem.Root
+                key={post.id}
+                mode="VERTICAL"
+                context={{
+                  post,
+                  width: "48%%",
+                }}
+              >
+                <PostItem.Thumbnail />
+              </PostItem.Root>
             ))}
           </div>
         </div>
