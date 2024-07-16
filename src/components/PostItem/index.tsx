@@ -34,7 +34,7 @@ function Username() {
 function Title() {
   const context = useContext(PostItemContext);
   return (
-    <div className="w-full font-extrabold text-[1.3rem] text-[#121212] pr-[100px] max-[768px]:pr-[0px]">
+    <div className="w-full font-extrabold text-[1.3rem] text-[#484857] pr-[100px] max-[768px]:pr-[0px]">
       {context.post?.title}
     </div>
   );

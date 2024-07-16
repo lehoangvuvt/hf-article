@@ -47,7 +47,7 @@ const TopicDetailsView = ({ data }: { data: GetPostsSuccessResponse }) => {
               style={{
                 background:
                   parseInt(searchParams.get("page") as string) === i + 1
-                    ? "#1DA1F2"
+                    ? "#908fac"
                     : "transparent",
                 color:
                   parseInt(searchParams.get("page") as string) === i + 1

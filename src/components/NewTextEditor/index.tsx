@@ -116,12 +116,31 @@ function NewEditor({
             textWrap: "balance",
             paddingBottom: "20px",
             lineHeight: "50px",
+            color: "#484857",
           },
         },
       },
     }),
-    HeadingTwo,
-    HeadingThree,
+    HeadingTwo.extend({
+      options: {
+        HTMLAttributes: {
+          style: {
+            color: "#484857",
+            fontSize: "1.5rem",
+          },
+        },
+      },
+    }),
+    HeadingThree.extend({
+      options: {
+        HTMLAttributes: {
+          style: {
+            color: "#484857",
+            fontSize: "1.3rem",
+          },
+        },
+      },
+    }),
     Blockquote,
     Callout,
     NumberedList,
@@ -150,7 +169,7 @@ function NewEditor({
               },
             };
           }
-          if (thumbnailURL != null) {
+          if (thumbnailURL === null) {
             setThumbnailURL(response.data.url);
           }
           return {
@@ -328,7 +347,7 @@ function NewEditor({
                   transform: isOpenMenu ? "scale(1)" : "scale(0)",
                   transition: "all 0.1s ease",
                 }}
-                className={`w-[400px] max-[768px]:right-[10px] max-[768px]:top-[130px] flex flex-col gap-[5px]
+                className={`w-[300px] max-[768px]:right-[10px] max-[768px]:top-[130px] flex flex-col gap-[5px]
                           bg-[white] px-[10px] py-[10px] fixed top-[250px] right-[18%] max-h-[300px] overflow-y-auto
                           rounded-md border-solid border-[1px] border-[rgba(0,0,0,0.1)] shadow-md`}
               >
@@ -340,8 +359,7 @@ function NewEditor({
                     }}
                     style={{
                       background:
-                        title.id === neartTitleId ? "#a9cee1" : "transparent",
-                      fontWeight: title.id === neartTitleId ? 600 : 400,
+                        title.id === neartTitleId ? "#ebe1fc" : "transparent",
                       padding: "10px 8px",
                       transition: "all 0.2s ease",
                     }}
@@ -362,7 +380,7 @@ function NewEditor({
             }}
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
             className="fixed bottom-[50px] cursor-pointer w-[42px] h-[42px] shadow-md
-              rounded-full flex items-center justify-center bg-[#a9cee1] max-[768px]:right-[10px] right-[18%] z-[100]"
+              rounded-full flex items-center justify-center bg-[#908fac] max-[768px]:right-[10px] right-[18%] z-[100]"
           >
             <KeyboardArrowUpIcon htmlColor="#ffffff" fontSize="large" />
           </div>
